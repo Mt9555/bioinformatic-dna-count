@@ -11,7 +11,7 @@ image = Image.open('logo.png')
 st.image(image, use_column_width=True)
 
 st.write("""
-# DNA Nucleotide Count Web App
+## DNA Nucleotide Count Web App
 This app counts the nucleotide composition of query DNA!
 ***
 """)
@@ -20,7 +20,7 @@ This app counts the nucleotide composition of query DNA!
 # Input Text Box
 
 #st.sidebar.header('Enter DNA sequence')
-st.header('Please Enter DNA sequence')
+st.header('Enter DNA sequence')
 
 sequence_input = ">DNA Query 2\nGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTCCTGTGCTCGGG\nATCTTCCAGACGTCGCGACTCTAAATTGCCCCCTCTGAGGTCAAGGAACACAAGATGGTTTTGGAAATGC\nTGAACCCGATACATTATAACATCACCAGCATCGTGCCTGAAGCCATGCCTGCTGCCACCATGCCAGTCCT"
 
@@ -30,16 +30,21 @@ sequence = sequence.splitlines()
 sequence = sequence[1:] # Skips the sequence name (first line)
 sequence = ''.join(sequence) # Concatenates list to string
 
+
+
+st.subheader('Press `ctrl key + enter` to apply')
+
+
 st.write("""
 ***
 """)
 
 ## Prints the input DNA sequence
-st.header('INPUT: DNA Query')
+st.header('DNA Query')
 sequence
 
 ## DNA nucleotide count
-st.header('OUTPUT: DNA Nucleotide Count')
+st.header('DNA Nucleotide Count')
 
 ### 1. Print dictionary
 st.subheader('Data in dict')
@@ -58,14 +63,14 @@ X = DNA_nucleotide_count(sequence)
 X
 
 ### 2. Print text
-st.subheader('Print text')
+st.subheader('Count')
 st.write('There are  ' + str(X['A']) + ' adenine (A)')
 st.write('There are  ' + str(X['T']) + ' thymine (T)')
 st.write('There are  ' + str(X['G']) + ' guanine (G)')
 st.write('There are  ' + str(X['C']) + ' cytosine (C)')
 
-### 3. Display DataFrame
-st.subheader('Display DataFrame')
+### 3. Display DataFrame using panda
+st.subheader('DataFrame')
 df = pd.DataFrame.from_dict(X, orient='index')
 df = df.rename({0: 'count'}, axis='columns')
 df.reset_index(inplace=True)
@@ -73,12 +78,12 @@ df = df.rename(columns = {'index':'nucleotide'})
 st.write(df)
 
 ### 4. Display Bar Chart using Altair
-st.subheader('Display Bar chart')
+st.subheader('Bar chart')
 p = alt.Chart(df).mark_bar().encode(
     x='nucleotide',
     y='count'
 )
 p = p.properties(
-    width=alt.Step(80)  # controls width of bar.
+    width=alt.Step(110)  # controls width of bar.
 )
 st.write(p)
